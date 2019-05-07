@@ -1,0 +1,9 @@
+sp {aula06*monitor*remaining*jewels
+   (state <s> ^io <io>)
+   (<io> ^input-link <il>)
+   (<il> ^CREATURE <creature>)
+   (<creature> ^LEAFLETS <l>)
+   (<l> ^REMAINING-TOTAL <rem-total>)
+-->
+   (write (crlf) |**** Remaining Jewels: **** | <rem-total>)
+}

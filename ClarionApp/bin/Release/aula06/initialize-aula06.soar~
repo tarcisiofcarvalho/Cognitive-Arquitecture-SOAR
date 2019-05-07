@@ -1,0 +1,27 @@
+# Propose initialize
+sp {aula06*propose*initialize-aula06
+   (state <s> ^superstate nil
+             -^name)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name initialize-aula06)}
+
+# Apply initialize
+sp {aula06*apply*initialize-aula06
+   (state <s> ^operator.name initialize-aula06
+              ^io.input-link <il>)
+   (<il> ^CREATURE <cr>)
+   (<cr> ^LEAFLETS <lf>)
+   (<lf> ^REMAINING-TOTAL <re-total>)
+-->
+   (<s> ^name aula06
+        ^creature (deep-copy <cr>)
+        ^desired <d>
+        ^planning <p>)
+   (<d> ^GOAL 0.0)
+   (<p> ^parameters <param>
+        ^steps <steps>)
+   (<param> ^current-step 1.0
+            ^last-step 0.0)
+   (write (crlf) |>>>Initialized<<<|)
+}

@@ -1,0 +1,15 @@
+C:/Users/tarci/Documents/IA941/Clarion/DemoClarion-v0.8/DemoClarion/ClarionApp/bin/Release/ClarionApp.exe
+C:/Users/tarci/Documents/IA941/Clarion/DemoClarion-v0.8/DemoClarion/ClarionApp/bin/Release/ClarionApp.pdb
+C:/Users/tarci/Documents/IA941/Clarion/DemoClarion-v0.8/DemoClarion/ClarionApp/bin/Release/ClarionLibrary.dll
+C:/Users/tarci/Documents/IA941/Clarion/DemoClarion-v0.8/DemoClarion/ClarionApp/obj/x86/Release/ClarionApp.exe
+C:/Users/tarci/Documents/IA941/Clarion/DemoClarion-v0.8/DemoClarion/ClarionApp/obj/x86/Release/ClarionApp.pdb
+C:/Users/tarci/Documents/IA941/Clarion/DemoClarion-v0.8/DemoClarion/ClarionApp/obj/x86/Release/ClarionApp.csprojResolveAssemblyReference.cache
+/home/tfc/eclipse-workspace/DemoClarion/ClarionApp/bin/Release/ClarionApp.exe
+/home/tfc/eclipse-workspace/DemoClarion/ClarionApp/bin/Release/ClarionApp.pdb
+/home/tfc/eclipse-workspace/DemoClarion/ClarionApp/bin/Release/CLARIONLibrary.dll
+/home/tfc/eclipse-workspace/DemoClarion/ClarionApp/bin/Release/CLARIONLibrary.xml
+/home/tfc/eclipse-workspace/DemoClarion/ClarionApp/obj/x86/Release/ClarionApp.csprojAssemblyReference.cache
+/home/tfc/eclipse-workspace/DemoClarion/ClarionApp/obj/x86/Release/ClarionApp.csproj.CoreCompileInputs.cache
+/home/tfc/eclipse-workspace/DemoClarion/ClarionApp/obj/x86/Release/ClarionApp.csproj.CopyComplete
+/home/tfc/eclipse-workspace/DemoClarion/ClarionApp/obj/x86/Release/ClarionApp.exe
+/home/tfc/eclipse-workspace/DemoClarion/ClarionApp/obj/x86/Release/ClarionApp.pdb

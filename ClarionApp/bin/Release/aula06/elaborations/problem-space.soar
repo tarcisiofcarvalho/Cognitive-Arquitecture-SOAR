@@ -1,0 +1,9 @@
+sp {aula06*elaborate*problem-space
+(state <s> ^name aula06)
+-->
+(<s> ^problem-space <p>)
+(<p> ^name aula06
+     ^default-operator-copy yes
+     ^default-state-copy yes
+     ^all-attributes-at-level two)
+}

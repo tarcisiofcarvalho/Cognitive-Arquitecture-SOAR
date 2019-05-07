@@ -1,0 +1,85 @@
+#sp {wander*halt*condition
+#   (state <s> ^attribute state
+#              ^impasse no-change
+#              ^superstate <ss>)
+#   (<ss> ^io <io>)
+#   (<io> ^output-link <ol>)
+##   -(<ol> ^MOVE <command>)
+#-->
+#   (<ol> ^MOVE <command>)
+#   (<command> ^Vel 0)
+#   (<command> ^VelR 2)
+#   (<command> ^VelL 0)
+#   (write (crlf) |>>>No enough Jewel<<< Rotating| )
+#   (interrupt)
+#}
+
+sp {food*eat
+   (state <s> ^creature <creature>
+             -^success <d>
+              ^io <io>)
+   (<io> ^output-link <ol>)
+   (<creature> ^SENSOR.VISUAL.ENTITY <entity>)
+   (<entity> ^TYPE FOOD)
+   (<entity> ^DISTANCE <foodDistance> < 50)
+   (<entity> ^NAME <foodName>)
+-->
+   (<ol> ^EAT <command>)
+   (<command> ^Name <foodName>)
+   (write (crlf) |>>>EAT FOOD<<<|)
+   (interrupt)
+}
+
+sp {jewel*hide
+   (state <s> ^creature <creature>
+              ^io <io>)
+   (<io> ^output-link <ol>)
+   (<creature> ^LEAFLETS <lf>
+               ^SENSOR.VISUAL.ENTITY <entity>)
+   (<lf> ^JEWEL-OUT-OF-SCOPE <scope>)
+   (<scope> ^JEWEL-COLOR <listColors>)
+   (<entity> ^NAME <jewelName>)
+   (<entity> ^TYPE JEWEL)
+   (<entity> ^COLOR <listColors>)
+   (<entity> ^DISTANCE <jewelDistance> < 30)
+-->
+   (<ol> ^HIDE <command>)
+   (<command> ^Name <jewelName>)
+   (write (crlf) |>>>HIDE JEWEL<<<| <listColors> | Jewel Name| <jewelName>)
+   (interrupt)
+}
+
+##Proposal
+#sp {aula06*propose*jewel*hide
+#   (state <s> ^creature <creature>
+#              ^io <io>)
+#   (<io> ^output-link <ol>)
+#   (<creature> ^LEAFLETS.REMAINING-JEWEL.JEWEL <jewel>
+#               ^SENSOR.VISUAL.ENTITY <entity>)
+#   (<jewel> ^TYPE <listColors>)
+#   (<entity> ^TYPE JEWEL)
+#   (<entity> ^COLOR <> <listColors>)
+#   (<entity> ^DISTANCE <jewelDistance> < 30)
+#   (<entity> ^NAME <jewelName>)
+#-->
+#   (<s> ^operator <o>)
+#   (<o> ^name hideJewel
+#        ^jewel <jewelName>)
+#   (write (crlf) |>>>Propose<<< Hide Jewel | <jewelName>)
+#}
+#
+## Apply
+#sp {aula06*apply*jewel*hide
+#   (state <s> ^creature <creature>
+#              ^io.output-link <ol>)
+#   (<s> ^operator <o>)
+#   (<o> ^name hideJewel
+#        ^jewel <jewelName>)
+#-->
+#   (<ol> ^HIDE <command>)
+#   (<command> ^Name <jewelName>)
+#   (write (crlf) |>>>Apply<<< Hide Jewel > Jewel Name| <jewelName>)
+#   (interrupt)
+#}
+
+

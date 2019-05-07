@@ -1,0 +1,28 @@
+##Proposal
+#sp {aula06*apply*plan*output*remove
+#   (state <s> ^planning <planning>)
+#   
+#   (<planning> ^parameters <params>
+#               ^output-control)
+#   (<params> ^output-status locked)
+#-->
+#   (<s> ^operator <o>)
+#   (<o> ^name planRemoveOutput
+#        ^step <current-step>
+#        ^type <type>)
+#   (write (crlf) |>>>Propose<<< Output | <desc> )
+#}
+#
+#sp {aula06*apply*plan*output*remove
+#(state <s> ^operator <o>            
+#           ^io.output-link <out>)
+#   (<o> ^name planRemoveOutput)
+#   (<o> ^type <type>)
+#   #   (<o> ^parameter.name <jewelName>)
+#   (<out> ^<type> <cmd>)
+#   (<cmd> ^status complete)
+#-->
+#   (<out> ^<type> <cmd> -)
+#   (write (crlf) |>>>Apply<<< Remove output! | <type>)
+#}
+#

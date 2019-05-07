@@ -1,0 +1,70 @@
+#Proposal
+sp {aula06*propose*plan*move*jewel
+   (state <s> ^creature <creature>
+             -^success <d>)
+   
+   (<creature> ^SENSOR.VISUAL.ENTITY <entity>
+               ^POSITION <position>
+               ^LEAFLETS <lf>)
+   (<lf> ^REMAINING-JEWEL <rj>)
+   (<rj> ^JEWEL <jewel>)
+   (<jewel> ^TYPE <colors>
+            ^REMAINING > 0.0)
+   (<entity> ^TYPE JEWEL  
+             ^COLOR <color> <colors>
+             ^NAME <name>
+             ^X <x>
+             ^Y <y>
+             ^DISTANCE <distance> > 0)
+-->
+   (<s> ^operator <o>)
+   (<o> ^name planMoveJewel
+        ^ENTITY <name>
+        ^DISTANCE <distance>
+        ^X <x>
+        ^Y <y>)
+   (write (crlf) |>>>Propose<<< move-Jewel simulation! | <color> | DIST: | <distance>)
+}
+
+#Apply
+sp {aula06*apply*plan*move*jewel
+   (state <s> ^creature <creature>
+              ^planning <planning>
+              ^operator <o>
+             -^success <d>)
+   (<o> ^name planMoveJewel
+        ^ENTITY <name>
+        ^DISTANCE <distance>
+        ^X <x>
+        ^Y <y>)
+   (<creature> ^SENSOR.VISUAL.ENTITY <entity>
+               ^POSITION <position>)
+   (<entity> ^NAME <name>
+             ^DISTANCE <distance>)
+   (<position> ^X <p-X>
+               ^Y <p-Y>)
+   (<planning> ^steps <steps>
+               ^parameters <param>)
+   (<param> ^last-step <last-step>)
+-->
+   (<position> ^X <x>
+               ^X <p-X> -
+               ^Y <y>
+               ^Y <p-Y> -)
+   (<step> ^DESC moveJewel
+           ^TYPE MOVE
+           ^STEP-NUM (+ <last-step> 1)
+           ^COMMAND <command>)
+   (<command> ^Vel 1)
+   (<command> ^VelR 1)
+   (<command> ^VelL 1)
+   (<command> ^X <x>)
+   (<command> ^Y <y>)
+   (<steps> ^step <step>)
+   (<param> ^last-step (+ <last-step> 1)
+                        <last-step> -)
+   (<entity> ^DISTANCE 0
+                       <distance> -)
+   (write (crlf) |>>>Apply<<< move-Jewel simulation! |)
+}
+

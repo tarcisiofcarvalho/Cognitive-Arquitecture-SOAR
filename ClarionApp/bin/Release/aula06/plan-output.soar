@@ -1,0 +1,39 @@
+#Proposal
+sp {aula06*proposal*plan*output
+   (state <s> ^planning <planning>
+              ^success <d>)
+   (<planning> ^steps <steps>)
+   (<steps> ^step <step>)
+   (<step>  ^STEP-NUM 1.0)
+   (<step> ^TYPE <type>)
+   (<step>  ^DESC <desc>)
+-->
+   (<s> ^operator <o>)
+   (<o> ^name planOutput
+        ^step 1.0
+        ^type <type>)
+   (write (crlf) |>>>Propose<<< Output | <desc> )
+}
+
+#Apply
+sp {aula06*apply*plan*output
+   (state <s> ^planning <planning>
+              ^io <io>
+              ^success <d>)
+   (<io> ^input-link <il>)
+   (<io> ^output-link <ol>)
+   (<o> ^name planOutput
+        ^step <op-step>)
+   (<planning> ^steps <steps>)
+   (<steps> ^step <step>)
+   (<step> ^STEP-NUM <op-step>)
+   (<step> ^COMMAND <cmd>)
+   (<step> ^TYPE <type>)
+   (<step> ^DESC <desc>)
+-->
+   (<ol> ^<type> <cmd>)
+   (write (crlf) |>>>Apply<<< Output | <desc> )
+   (interrupt)
+}
+
+

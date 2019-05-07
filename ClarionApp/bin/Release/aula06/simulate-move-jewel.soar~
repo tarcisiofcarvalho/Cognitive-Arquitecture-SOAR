@@ -1,0 +1,14 @@
+sp {aula06*proposal*simulate*move*jewel
+   (state <s> ^creature <creature>
+              ^planning <planning>)
+   (<creature> ^SENSOR.VISUAL.ENTITY <entity>
+               ^POSITION <position>)
+   (<entity> ^TYPE <type> JEWEL  
+             ^COLOR Red
+             ^NAME <name>
+             ^X <x>
+             ^Y <y>)
+-->
+   (<s> ^operator <o>)
+   (<o> ^name simulationMoveJewel)
+}

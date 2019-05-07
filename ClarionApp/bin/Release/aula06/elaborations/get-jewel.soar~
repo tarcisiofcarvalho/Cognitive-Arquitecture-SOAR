@@ -1,0 +1,52 @@
+## Propose*get*jewel:
+#sp {aula06*propose*plan*get*jewel
+#   (state <s> ^creature <creature>
+#              ^planning <planning>)
+#   
+#   (<creature> ^SENSOR.VISUAL.ENTITY <entity>)
+#   (<entity> ^TYPE JEWEL) 
+#   (<entity> ^DISTANCE <jewelDistance> < 30)
+#   (<entity> ^NAME <jewelName>)
+#     
+#-->
+#   (<s> ^operator <o>)
+#   (<o> ^name planGetJewel)
+#   (<o> ^parameter <jewel>)
+#   (<jewel> ^NAME <jewelName>)
+#   (<jewel> ^DISTANCE <jewelDistance>)
+#   (write (crlf) | Propose Plan-Get-Jewel! |)
+# }
+#   
+## Apply
+#sp {aula06*apply*plan*get*jewel
+#   (state <s> ^creature <creature>
+#              ^planning <planning>
+#              ^operator <o>)
+#   
+#   (<creature> ^LEAFLETS <lf>)
+#   (<lf> ^LEAFLET_A <lfA>)
+#   (<o> ^name planGetJewel)
+#   (<o> ^parameter.NAME <jewelName>)
+#   
+#   (<planning> ^steps <steps>
+#               ^parameters <param>)
+#   (<param> ^last-step <last-step>)
+#   
+#   (<creature> ^SENSOR.VISUAL.ENTITY <entity>)
+#   (<entity> ^TYPE JEWEL) 
+#   (<entity> ^NAME <jewelName>)
+#-->
+#   (<step> ^DESC getJewel
+#           ^TYPE GET
+#           ^STEP-NUM (+ <last-step> 1)
+#           ^COMMAND <command>)
+#   (<command> ^Name <jewelName>)
+#   (<steps> ^step <step>)
+#   (<param> ^last-step (+ <last-step> 1)
+#                        <last-step> -)
+#   (<lf> ^LEAFLET_A (+ <lfA> 1)
+#                     <lfA> -)
+#   (<entity> ^NAME <jewelName> -) # Simulate entity remove
+#   
+#   (write (crlf) | Applied Plan-Get-Jewel! |)
+#}

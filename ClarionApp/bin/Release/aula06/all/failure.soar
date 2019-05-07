@@ -1,0 +1,24 @@
+# Failure evaluation
+sp {aula06*evaluate*state*failure*duplicate
+   (state <s2> ^name aula06
+               ^quiescence t
+               ^superstate-set <s1>
+               ^io.input-link <i1>
+               ^tried-tied-operator)
+   (<il> ^creature <c>) 
+   (<c> ^LEAFLETS <lf>)
+   (<lf> ^LEAFLET_A <A>
+         ^LEAFLET_B <B>
+         ^LEAFLET_C <C>)
+   (<s1> ^name aula06
+               ^desired <d>
+               ^io.input-link <i12>)
+   (<il2> ^creature <c2>)
+   (<c2> ^LEAFLETS <lf2>)
+   (<lf2> ^LEAFLET_A <A>
+          ^LEAFLET_B <B>
+          ^LEAFLET_C <C>)
+-->
+   (<s2> ^failure <d>)
+   (write (crlf) |Duplicated-State!|)
+}

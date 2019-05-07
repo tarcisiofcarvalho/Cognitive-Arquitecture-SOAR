@@ -1,0 +1,91 @@
+################## SEE ENTITY WITH MEMORY COUNT #####################
+## Propose
+#sp {propose*see*entity*with*memory*count
+#   (state <s> ^creature <creature>)
+#   (<creature> ^SENSOR.VISUAL.ENTITY <entity>)     
+#   (<entity> ^TYPE <type> << JEWEL FOOD >>)   
+#   (<entity> ^COLOR <color>)
+#   (<entity> ^X <x>)
+#   (<entity> ^Y <y>) 
+#   (<entity> ^NAME <name>)
+#   (<creature> ^MEMORY <memory>)   
+#   -(<memory> ^ENTITY.NAME <name>)
+#   (<memory> ^COUNT <quantity> < 7)
+#-->
+#   (<s> ^operator <o>)
+#   (<o> ^name seeEntityWithMemoryCount)
+#   (<o> ^parameterEntity <newEntity>)
+#   (<newEntity> ^Name <name>)
+#   (<newEntity> ^Type <type>)
+#   (<newEntity> ^X <x>)
+#   (<newEntity> ^Y <y>)
+#   (<newEntity> ^Color <color>)}
+#   
+## Apply
+#sp {apply*see*entity*with*memory*count
+#   (state <s> ^operator <o>
+#              ^creature <creature>)
+#   (<creature> ^MEMORY <memory>)
+#   (<memory> ^COUNT <quantity>)   
+#   (<o> ^name seeEntityWithMemoryCount)
+#   (<o> ^parameterEntity <newEntity>)
+#   (<newEntity> ^X <x>)
+#   (<newEntity> ^Y <y>)
+#   (<newEntity> ^Name <name>)
+#   (<newEntity> ^Type <type>)
+#   (<newEntity> ^Color <color>)
+#-->
+#   (<memory> ^ENTITY <memoryEntity>)
+#   (<memoryEntity> ^X <x>)
+#   (<memoryEntity> ^Y <y>)
+#   (<memoryEntity> ^NAME <name>)
+#   (<memoryEntity> ^TYPE <type>)
+#   (<memoryEntity> ^COLOR <color>) 
+#   (<memory> ^COUNT <quantity> -)
+#   (<memory> ^COUNT (+ 1 <quantity>))
+#
+#}
+#
+#################  SEE ENTITY WITHOUT MEMORY COUNT #################
+## Propose
+#sp {propose*see*entity*without*memory*count
+#   (state <s> ^creature <creature>)
+#   (<creature> ^SENSOR.VISUAL.ENTITY <entity>)
+#   (<entity> ^TYPE <type> << JEWEL FOOD >>)
+#   (<entity> ^X <x>)
+#   (<entity> ^Y <y>) 
+#   (<entity> ^NAME <name>)
+#   (<entity> ^COLOR <color>)
+#   (<creature> ^MEMORY <memory>)   
+#   -(<memory> ^ENTITY.NAME <name>)
+#   -(<memory> ^COUNT <quantity>)
+#-->
+#   (<s> ^operator <o>)
+#   (<o> ^name seeEntityWithoutMemoryCount)
+#   (<o> ^parameterEntity <newEntity>)
+#   (<newEntity> ^Name <name>)
+#   (<newEntity> ^Type <type>)
+#   (<newEntity> ^X <x>)
+#   (<newEntity> ^Y <y>)
+#   (<newEntity> ^Color <color>)}
+#   
+## Apply
+#sp {apply*see*entity*without*memory*count
+#   (state <s> ^operator <o>
+#              ^creature <creature>)
+#   (<creature> ^MEMORY <memory>)  
+#   (<o> ^name seeEntityWithoutMemoryCount)
+#   (<o> ^parameterEntity <newEntity>)
+#   (<newEntity> ^X <x>)
+#   (<newEntity> ^Y <y>)
+#   (<newEntity> ^Name <name>)
+#   (<newEntity> ^Type <type>)
+#   (<newEntity> ^Color <color>)
+#-->
+#   (<memory> ^ENTITY <memoryEntity>)
+#   (<memoryEntity> ^X <x>)
+#   (<memoryEntity> ^Y <y>)
+#   (<memoryEntity> ^NAME <name>)
+#   (<memoryEntity> ^TYPE <type>)
+#   (<memoryEntity> ^COLOR <color>)
+#   (<memory> ^COUNT 1)}

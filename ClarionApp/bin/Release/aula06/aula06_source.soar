@@ -1,0 +1,17 @@
+source _firstload.soar
+pushd all
+source all_source.soar
+popd
+pushd elaborations
+source elaborations_source.soar
+popd
+source plan-exception.soar
+source Impasse__State_No-Change.soar
+pushd Impasse__State_No-Change
+source Impasse__State_No-Change_source.soar
+popd
+source plan-get-jewel.soar
+source plan-move-jewel.soar
+source plan-output.soar
+source initialize-aula06.soar
+source preferences.soar

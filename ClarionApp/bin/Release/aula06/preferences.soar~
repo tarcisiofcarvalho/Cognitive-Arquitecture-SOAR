@@ -1,0 +1,313 @@
+##################  OPERATORS PREFERENCES AND IMPASSE SOLVE  ###################
+##Exception vs others
+#sp {exception*others*preferences
+#   (state <s> ^operator <o> +
+#                        <o2> +)
+#   (<o> ^name << wanderException foodException jewelException >>)
+#   (<o2> ^name << planOutput planMoveJewel planGetJewel >>)
+#-->
+#   (<s> ^operator <o> > <o2>)
+#   (write (crlf) |>>>Preference<<< Exception! |)
+#}
+#
+##Exception Wander vs Other exceptions
+#sp {exception*wander*others*preferences
+#   (state <s> ^operator <o> +
+#                        <o2> +)
+#   (<o> ^name wanderException)
+#   (<o2> ^name << foodException jewelException >>)
+#-->
+#   (<s> ^operator <o> > <o2>)
+#   (write (crlf) |>>>Preference<<< Exception Wander! |)
+#}
+#
+##Exception food vs Exception jewel
+#sp {exception*food*jewel*preferences
+#   (state <s> ^operator <o> +
+#                        <o2> +)
+#   (<o> ^name foodException)
+#   (<o2> ^name jewelException)
+#-->
+#   (<s> ^operator <o> > <o2>)
+#   (write (crlf) |>>>Preference<<< Exception Food! |)
+#}
+
+#Remove wander
+sp {exception*wander*remove*preferences
+   (state <s> ^operator <o> +
+                        <o2> +)
+   (<o> ^name remWander)
+   (<o2> ^name << planOutput planMoveJewel planGetJewel >>)
+-->
+   (<s> ^operator <o> > <o2>)
+   (write (crlf) |>>>Preference<<< Exception! |)
+}
+
+#MoveJewel vs MoveJewel
+sp {planMoveJewel*planModeJewel*preferences
+   (state <s> ^attribute operator
+              ^impasse tie
+              ^item <o> {<> <o> <o2>}
+              ^item-count <itemCount>
+              ^superstate <ss>)
+   (<o> ^name planMoveJewel)
+   (<o2> ^name planMoveJewel)
+   (<o2> ^DISTANCE <distance2>)
+   (<o>  ^DISTANCE <distance> <= <distance2>)
+-->
+   (<ss> ^operator <o> > <o2>)
+   (write (crlf) |>>>Preference<<< Plan Move Jewel Preference Applied! |)
+}
+
+#Output vs planMoveJewel and planGetJewel
+sp {planOutput*planMoveJewel*preferences
+   (state <s> ^operator <o> +
+                        <o2> +)
+   (<o> ^name << planMoveJewel planGetJewel >>)
+   (<o2> ^name planOutput)
+-->
+   (<s> ^operator <o2> > <o>)}
+
+#planMoveJewel*planGetJewel
+sp {planMoveJewel*planGetJewel*preferences
+   (state <s> ^operator <o> +
+                        <o2> +)
+   (<o> ^name planMoveJewel)
+   (<o2> ^name planGetJewel)
+-->
+   (<s> ^operator <o2> > <o>)}
+
+#Output vs output
+sp {planOutput*planOutput*preference
+   (state <s> ^attribute operator
+              ^impasse tie
+              ^item <o> {<> <o> <o2>}
+              ^superstate <ss>)
+   (<o> ^name planOutput)
+   (<o2> ^name planOutput)
+-->
+   (<s> ^operator <o> > <o2>)}
+
+## FOOD
+#
+## Move Food vs Eat Food
+#sp {moveFood*eatFood*preferences
+#   (state <s> ^operator <o> +
+#                        <o2> +)
+#   (<o> ^name eatFood)
+#   (<o2> ^name << moveFood moveJewel >>)
+#-->
+#   (<s> ^operator <o> > <o2>)}
+#
+## Eat Food vs Avoid Brick
+#sp {planEatFood*planAvoidBrick*preferences
+#   (state <s> ^operator <o> +
+#                        <o2> +)
+#   (<o> ^name planEatFood)
+#   (<o2> ^name planAvoidBrick)
+#-->
+#   (<s> ^operator <o> > <o2>)}
+
+
+
+#SEE AND PROCESS ENTITY
+
+## Move Jewel or Move Food vs See Entity
+#sp {moveJewel*seeEntity*preferences
+#(state <s> ^operator <o> +
+#                     <o2> +)
+#(<o> ^name << seeEntityWithMemoryCount seeEntityWithoutMemoryCount >>)
+#(<o2> ^name << moveJewel moveFood eatFood >>)
+#-->
+#(<s> ^operator <o> > <o2>)}
+
+## Get Jewel vs Avoid Brick
+#sp {planGetJewel*planAvoidBrick*preferences
+#(state <s> ^operator <o> +
+#                     <o2> +)
+#(<o> ^name planGetJewel)
+#(<o2> ^name planAvoidBrick)
+#-->
+#(<s> ^operator <o> > <o2>)}
+
+## Move Jewel vs Get Jewel
+#sp {planMoveJewel*planGetJewel*preferences
+#(state <s> ^operator <o> +
+#                     <o2> +)
+#(<o> ^name planGetJewel)
+#(<o2> ^name << planMoveJewel planMoveFood >>)
+#-->
+#(<s> ^operator <o> > <o2>)}
+
+## See Entity With Memory vs Avoid Brick
+#sp {avoidBrick*seeEntityWithMemory*preferences
+#(state <s> ^operator <o> +
+#                     <o2> +)
+#(<o> ^name avoidBrick)
+#(<o2> ^name << seeEntityWithMemoryCount seeEntityWithoutMemoryCount >>)
+#-->
+#(<s> ^operator <o> > <o2>)}
+#
+## See Ententy Without Memory Preferences
+#sp {seeEntity*without*memory*preferences
+#(state <s> ^operator <o> +)
+#(<o> ^name << seeEntityWithMemoryCount seeEntityWithoutMemoryCount >>)
+#-->
+#(<s> ^operator <o> =)}
+
+
+#JEWEL
+
+
+## Get Jewel vs SeeEntity
+#sp {planGetJewel*seeEntity*preferences
+#(state <s> ^operator <o> +
+#                     <o2> +)
+#(<o> ^name getJewel)
+#(<o2> ^name << seeEntityWithMemoryCount seeEntityWithoutMemoryCount >>)
+#-->
+#(<s> ^operator <o> > <o2>)}
+
+
+#
+## Move Jewel vs Move Jewel Preferences
+#sp {moveJewel*moveJewel*less*distance
+#(state <s> ^attribute operator
+#           ^impasse tie
+#           ^item <o> {<> <o> <o2>}
+#           ^superstate <ss>)
+#(<ss> ^creature <creature>)
+#(<o> ^name planMoveJewel)
+#(<o2> ^name planMoveJewel)
+#(<o2> ^parameter.distance <distance2>)
+#(<o>  ^parameter.distance <distance> <= <distance2>)
+#-->
+#(<ss> ^operator <o> > <o2>)}
+#
+## Get Jewel vs Get Jewel Preferences
+#sp {getJewel*getJewel*preferences
+#(state <s> ^attribute operator
+#           ^impasse tie
+#           ^item <o> {<> <o> <o2>}
+#           ^superstate <ss>)
+#(<o> ^name getJewel)
+#(<o2> ^name getJewel)
+#(<o2> ^parameter.distance <distance2>)
+#(<o>  ^parameter.distance <distance> <= <distance2>)
+#-->
+#(<ss> ^operator <o> > <o2>)}
+
+## Move Food vs Move Jewel Preferences - Move Food Wins
+#sp {planMoveFood*planMoveJewel*preferences*moveFoodWins
+#(state <s> ^attribute operator
+#           ^impasse tie
+#           ^item <o> {<> <o> <o2>}
+#           ^creature <c>)
+#(<o> ^name planMoveFood)
+#(<o> ^parameterFuel <threshold>)
+#(<o2> ^name planMoveJewel)
+#(<c> ^SENSOR.FUEL <fuel>)
+#(<fuel> ^VALUE <value> <= <threshold>)
+#-->
+#(<ss> ^operator <o> > <o2>)}
+
+## Move Food vs Move Food Preferences
+#sp {planMoveFood*planMoveFood*preferences
+#(state <s> ^attribute operator
+#           ^impasse tie
+#           ^item <o> {<> <o> <o2>}
+#           ^superstate <ss>)
+#(<o> ^name moveFood)
+#(<o2> ^name moveFood)
+#(<o2> ^parameter.distance <distance2>)
+#(<o>  ^parameter.distance <distance> <= <distance2>)
+#-->
+#(<ss> ^operator <o> > <o2>)}
+
+## Eat Food vs Eat Food Preferences
+#sp {eatFood*eatFood*preferences
+#(state <s> ^attribute operator
+#           ^impasse tie
+#           ^item <o> {<> <o> <o2>}
+#           ^superstate <ss>)
+#(<o> ^name eatFood)
+#(<o2> ^name eatFood)
+#(<o2> ^parameter.distance <distance2>)
+#(<o>  ^parameter.distance <distance> <= <distance2>)
+#-->
+#(<ss> ^operator <o> > <o2>)}
+
+# FOOD vs JEWEL
+
+ 
+
+## Move Food vs Move Jewel Preferences - Move Jewel Wins
+#sp {moveFood*moveJewel*preferences*moveJewelWins
+#(state <s> ^attribute operator
+#           ^impasse tie
+#           ^item <o> {<> <o> <o2>}
+#           ^superstate <ss>)
+#(<ss> ^io.input-link <il>)
+#(<o> ^name moveFood)
+#(<o> ^parameterFuel <threshold>)
+#(<o2> ^name moveJewel)
+#(<il> ^CREATURE.SENSOR.FUEL <fuel>)
+#(<fuel> ^VALUE <value> > <threshold>)
+#-->
+#(<ss> ^operator <o2> > <o>)}
+
+
+#BRICK
+
+# Avoid Brick vs Avoid Brick Preferences
+sp {planAvoidBrick*planAvoidBrick*without*move*jewel*preferences
+   (state <s> ^attribute operator
+              ^impasse tie
+              ^item <o> {<> <o> <o2>}
+              ^item-count <itemCount>
+              ^superstate <ss>)
+   (<o> ^name planAvoidBrick)
+   (<o2> ^name planAvoidBrick)
+   (<o2> ^parameter <distance2>)
+   (<o>  ^parameter <distance> <= <distance2>)
+-->
+   (<ss> ^operator <o> > <o2>)}
+
+## Avoid Brick vs Move Jewel vs Move Food Preferences with element in memory
+#sp {planAvoidBrick*planMoveJewel*planMoveFood*preferences
+#(state <s> ^attribute operator
+#           ^impasse tie
+#           ^item <o> {<> <o> <o2>}
+#           ^item-count <itemCount> 2
+#           ^superstate <ss>)
+#(<o> ^name planAvoidBrick)
+#(<o2> ^name << planMoveJewel planMoveFood >>)
+#(<o2> ^parameter <entity>)
+#(<entity> ^NAME <entityName>)
+#(<ss> ^CREATURE <creature>)
+#(<creature> ^MEMORY <memory>)
+#(<memory> ^ENTITY <entityInMemory>)
+#(<entityInMemory> ^NAME <entityName>)
+#-->
+#(<o> ^entityName <entityName>)
+#(<ss> ^operator <o> > <o2>)}
+#
+## WANDER
+#
+## Wander Preferences
+#sp {wander*preferences
+#(state <s> ^operator <o> +)
+#(<o> ^name wander)
+#-->
+#(<s> ^operator <o> <)}
+
+#SEE AND PROCESS ENTITY
+
+## See entity vs Initialize
+#sp {initialize*seeEntity*preferences
+#(state <s> ^operator <o> +
+#                     <o2> +)
+#(<o> ^name << seeEntityWithMemoryCount seeEntityWithoutMemoryCount >>)
+#(<o2> ^name initialize-aula06)
+#-->
+#(<s> ^operator <o2> > <o>)}

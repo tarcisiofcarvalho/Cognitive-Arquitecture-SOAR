@@ -1,0 +1,40 @@
+##############################  ELABORATION MOVE JEWEL  #####################################
+#sp {aula06*elaborate*move*jewel*red
+#   (state <s> ^creature <creature>
+#              ^planning <planning>)
+#   (<creature> ^SENSOR.VISUAL.ENTITY <entity>
+#               ^POSITION <position>)
+#   (<entity> ^TYPE <type> JEWEL  
+#             ^COLOR Red
+#             ^NAME <name>
+#             ^X <x>
+#             ^Y <y>)
+#   (<position> ^X <p-X>
+#               ^Y <p-Y>)
+#   (<planning> ^steps <steps>
+#               ^parameters <param>)
+#   #(<temp> ^value <value>)
+#   (<param> ^last-step <last-step>)
+#-->
+#   #(<temp> ^value (+ <last-step> 1))
+#   #(<temp> ^value <value>)
+#   (<position> ^X <x>
+#               ^X <p-X> -
+#               ^Y <y>
+#               ^Y <p-Y> -)
+#   (<step> ^DESC moveJewel
+#           ^TYPE MOVE
+#           ^STEP-NUM (+ <last-step> 1)
+#           ^COMMAND <command>)
+#   (<command> ^Vel 1)
+#   (<command> ^VelR 1)
+#   (<command> ^VelL 1)
+#   (<command> ^X <x>)
+#   (<command> ^Y <y>)
+#   (<steps> ^step <step>)
+#   (<param> ^last-step <last-step> -
+#                      (+ <last-step> 1))
+#    #        ^last-step <last-step> -)
+#   (write (crlf) | Elaboration-Move-Jewel! |)
+#   (interrupt)
+#}

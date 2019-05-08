@@ -204,18 +204,50 @@ namespace ClarionApp
             return response;
         }
 
-        /// <summary>
-        /// Send Control Difft Comand
-        /// </summary>
-        /// <param name="creatureId">The creature ID</param>
-        /// <param name="v">The velocity</param>
-        /// <param name="vr">The right wheel velocity</param>
-        /// <param name="vl">The left wheel velocity</param>
-        /// <exception cref="WorldServerConnectionError">Connection Exception</exception>
-        /// <exception cref="WorldServerReadError">Read Exception</exception>
-        /// <exception cref="WorldServerSendError">Send Exception</exception>
-        /// <returns>The messages received from World Server</returns>
-        public string SendSetTurn(string creatureId, double v, double vr, double vl)
+		public string SendNewWayPoint(double x, double y)
+		{
+			String response = String.Empty;
+
+			try {
+				// Prepare the message
+				StringBuilder builder = new StringBuilder ();
+				builder.Append ("newwp ");
+				builder.Append (" ");
+				builder.Append (x);
+				builder.Append (" ");
+				builder.Append (y);
+				builder.Append (" ");
+
+				// Send Message
+				SendMessage (builder.ToString ());
+
+				// Read the response
+				response = ReadMessage ();
+			} catch (WorldServerConnectionError connEx) {
+				throw connEx;
+			} catch (WorldServerSendError sendEx) {
+				throw sendEx;
+			} catch (WorldServerReadError readEx) {
+				throw readEx;
+			} catch (Exception e) {
+				throw new WorldServerSendError ("Error while sending message", e);
+			}
+
+			return response;
+		}
+
+		/// <summary>
+		/// Send Control Difft Comand
+		/// </summary>
+		/// <param name="creatureId">The creature ID</param>
+		/// <param name="v">The velocity</param>
+		/// <param name="vr">The right wheel velocity</param>
+		/// <param name="vl">The left wheel velocity</param>
+		/// <exception cref="WorldServerConnectionError">Connection Exception</exception>
+		/// <exception cref="WorldServerReadError">Read Exception</exception>
+		/// <exception cref="WorldServerSendError">Send Exception</exception>
+		/// <returns>The messages received from World Server</returns>
+		public string SendSetTurn(string creatureId, double v, double vr, double vl)
         {
             String response = String.Empty;
 

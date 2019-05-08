@@ -43,7 +43,9 @@ namespace ClarionApp
 					}
 
                     ws.NewCreature(100, 500, 0, out creatureId, out creatureName);
-					ws.SendCreateLeaflet();				
+					ws.SendCreateLeaflet();
+					ws.SendNewWayPoint (700, 500);
+							
 		            if(args.Length>1){
 						if(args[3] == "grow"){
 	                    	//ws.NewBrick(4, 747, 2, 800, 567);

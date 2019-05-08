@@ -51,15 +51,12 @@
     <Reference Include="gtk-sharp">
       <HintPath>..\..\..\..\..\..\..\..\Program Files %28x86%29\GtkSharp\2.12\lib\gtk-sharp-2.0\gtk-sharp.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Package>gtk-sharp-2.0</Package>
-    </Reference>
     <Reference Include="Mono.Posix" />
+    <Reference Include="System" />
+    <Reference Include="Mono.CSharp" />
     <Reference Include="CLARIONLibrary">
       <HintPath>..\..\..\tools\The CLARION Library 6.1.0.7\CLARIONLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

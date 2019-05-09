@@ -54,8 +54,8 @@
     <Reference Include="Mono.Posix" />
     <Reference Include="System" />
     <Reference Include="Mono.CSharp" />
-    <Reference Include="CLARIONLibrary">
-      <HintPath>..\..\..\tools\The CLARION Library 6.1.0.7\CLARIONLibrary.dll</HintPath>
+    <Reference Include="ClarionLibrary">
+      <HintPath>..\lib\ClarionLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -13,3 +13,11 @@ C:/Users/tarci/Documents/IA941/Clarion/DemoClarion-v0.8/DemoClarion/ClarionApp/o
 /home/tfc/eclipse-workspace/DemoClarion/ClarionApp/obj/x86/Release/ClarionApp.csproj.CopyComplete
 /home/tfc/eclipse-workspace/DemoClarion/ClarionApp/obj/x86/Release/ClarionApp.exe
 /home/tfc/eclipse-workspace/DemoClarion/ClarionApp/obj/x86/Release/ClarionApp.pdb
+/Users/tfc/eclipse-workspace/CognitiveArquitecture-CLARION/ClarionApp/bin/Release/ClarionApp.exe
+/Users/tfc/eclipse-workspace/CognitiveArquitecture-CLARION/ClarionApp/bin/Release/ClarionApp.pdb
+/Users/tfc/eclipse-workspace/CognitiveArquitecture-CLARION/ClarionApp/bin/Release/ClarionLibrary.dll
+/Users/tfc/eclipse-workspace/CognitiveArquitecture-CLARION/ClarionApp/obj/x86/Release/ClarionApp.csprojAssemblyReference.cache
+/Users/tfc/eclipse-workspace/CognitiveArquitecture-CLARION/ClarionApp/obj/x86/Release/ClarionApp.csproj.CoreCompileInputs.cache
+/Users/tfc/eclipse-workspace/CognitiveArquitecture-CLARION/ClarionApp/obj/x86/Release/ClarionApp.csproj.CopyComplete
+/Users/tfc/eclipse-workspace/CognitiveArquitecture-CLARION/ClarionApp/obj/x86/Release/ClarionApp.exe
+/Users/tfc/eclipse-workspace/CognitiveArquitecture-CLARION/ClarionApp/obj/x86/Release/ClarionApp.pdb

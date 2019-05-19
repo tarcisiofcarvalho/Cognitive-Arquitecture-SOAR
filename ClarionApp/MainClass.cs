@@ -42,40 +42,123 @@ namespace ClarionApp
 					}
 
 					ws.NewCreature (100, 500, 0, out creatureId, out creatureName);
+
+					// Start >>> Leaflet process preparation //
 					String leaflets_raw = ws.SendCreateLeaflet ();
 					string [] leaflets_arr = leaflets_raw.Split (' ');
-					//var leafletMap = new Dictionary<string, int> ();
+					//Console.WriteLine ("Leaflets: " + leaflets_raw);
 
-					Console.WriteLine (leaflets_arr [0] + " " + leaflets_arr [1] + " " + leaflets_arr [2] + " " + leaflets_arr [4]);
-					//Leaflet leaflet1 = new Leaflet ();
-					//leaflet1.items = new List<LeafletItem> ();
-					//leaflet1.items.Add (new LeafletItem (leaflets_arr[0], leaflets_arr, 0));
-					//leaflet1.items.Add (new LeafletItem ("Green", 0, 0));
-					//leaflet1.items.Add (new LeafletItem ("Blue", 0, 0));
-					//leaflet1.items.Add (new LeafletItem ("Yellow", 0, 0));
-					//leaflet1.items.Add (new LeafletItem ("Magenta", 0, 0));
-					//leaflet1.items.Add (new LeafletItem ("White", 2 - leafletRemainingJewelWhite, 0));
+					Leaflet leaflet1 = new Leaflet ();
+					leaflet1.items = new List<LeafletItem> ();
+					Leaflet leaflet2 = new Leaflet ();
+					leaflet2.items = new List<LeafletItem> ();
+					Leaflet leaflet3 = new Leaflet ();
+					leaflet3.items = new List<LeafletItem> ();
 
-					//for (int i=0; i < s_temp.Length; i++) {
-					//	if (s_temp[i] != "") {
-					//		if (s_temp[i] == "Red") {
-					//			i++;
-					//		}
+					int leafNum = 1;
+					int lf1T = 0;
+					int lf2T = 0;
+					int lf3T = 0;
+					for (int i=0; i < leaflets_arr.Length; i++) {
+						if (leaflets_arr [i] != "") {
+							if(leaflets_arr [i] == "false") {
+								leafNum++;
+							} else if (leaflets_arr [i].Length > 3) {
+								switch (leafNum) {
+								case 1:
+									leaflet1.items.Add (new LeafletItem (leaflets_arr [i], Int32.Parse (leaflets_arr [i + 2]), 0));
+									lf1T = lf1T + Int32.Parse (leaflets_arr [i + 2]);
+									i = i + 2;
+									break;
+								case 2:
+									leaflet2.items.Add (new LeafletItem (leaflets_arr [i], Int32.Parse (leaflets_arr [i + 2]), 0));
+									lf2T = lf2T + Int32.Parse (leaflets_arr [i + 2]);
+									i = i + 2;
+									break;
+								case 3:
+									leaflet3.items.Add (new LeafletItem (leaflets_arr [i], Int32.Parse (leaflets_arr [i + 2]), 0));
+									lf3T = lf3T + Int32.Parse (leaflets_arr [i + 2]);
+									i = i + 2;
+									break;
+								default:
+									break;
+								}
+							}
+						}
+					}
 
-					//	}
+					//Console.WriteLine ("Leaflet 1 items: ");
+					//foreach(LeafletItem lt in leaflet1.items) {
+					//	Console.WriteLine ("Jewel: " + lt.itemKey);
+					//	Console.WriteLine ("Total: " + lt.totalNumber);
 
 					//}
 
+					//Console.WriteLine ("Leaflet 2 items: ");
+					//foreach (LeafletItem lt in leaflet2.items) {
+					//	Console.WriteLine ("Jewel: " + lt.itemKey);
+					//	Console.WriteLine ("Total: " + lt.totalNumber);
 
-					//Red  1 0 Yellow  1 0 Magenta  1 0 16 false  White  1 0 Yellow  1 0 Blue  1 0 11 false  Red  2 0 Magenta  1 0 22 false
-					//Console.Write ("send Leaflet: " + d);
+					//}
+
+					//Console.WriteLine ("Leaflet 3 items: ");
+					//foreach (LeafletItem lt in leaflet3.items) {
+					//	Console.WriteLine ("Jewel: " + lt.itemKey);
+					//	Console.WriteLine ("Total: " + lt.totalNumber);
+
+					//}
+
+					// In case the leaflets sum have less than 9 jewels, then add remaining
+					int remJewels = 9 - (lf1T+lf2T+lf3T);
+					//Console.WriteLine ("Rem Jewels: " + remJewels);
+					//Console.WriteLine ("count lf1: " + leaflet1.items.Count);
+					if (remJewels > 0) {
+						for (int i = 0; i < remJewels; i++) {
+							if (lf1T < 3) {
+								leaflet1.items.Add (new LeafletItem ("Red", 1, 0));
+								lf1T++;
+								//Console.WriteLine ("Added rem Jewel - Leaflet 1");
+							} else if (lf2T < 3) {
+								leaflet2.items.Add (new LeafletItem ("Red", 1, 0));
+								lf2T++;
+								//Console.WriteLine ("Added rem Jewel - Leaflet 2");
+							} else if (lf3T < 3) {
+								leaflet3.items.Add (new LeafletItem ("Red", 1, 0));
+								lf3T++;
+								//Console.WriteLine ("Added rem Jewel - Leaflet 3");
+							}
+						}
+					}
+					//Console.WriteLine ("Double check: ");
+					//Console.WriteLine ("Leaflet 1 items: ");
+					//foreach (LeafletItem lt in leaflet1.items) {
+					//	Console.WriteLine ("Jewel: " + lt.itemKey);
+					//	Console.WriteLine ("Total: " + lt.totalNumber);
+
+					//}
+
+					//Console.WriteLine ("Leaflet 2 items: ");
+					//foreach (LeafletItem lt in leaflet2.items) {
+					//	Console.WriteLine ("Jewel: " + lt.itemKey);
+					//	Console.WriteLine ("Total: " + lt.totalNumber);
+
+					//}
+
+					//Console.WriteLine ("Leaflet 3 items: ");
+					//foreach (LeafletItem lt in leaflet3.items) {
+					//	Console.WriteLine ("Jewel: " + lt.itemKey);
+					//	Console.WriteLine ("Total: " + lt.totalNumber);
+
+					//}
+					// End >>> Leaflet process preparation //
+
 					ws.SendNewWayPoint (700, 500);
 					if (args.Length > 1) {
 						if (args [3] == "grow") {
-							ws.NewBrick (4, 747, 2, 800, 567);
-							ws.NewBrick (4, 50, -4, 747, 47);
-							ws.NewBrick (4, 49, 562, 796, 599);
-							ws.NewBrick (4, -2, 6, 50, 599);
+							//ws.NewBrick (4, 747, 2, 800, 567);
+							//ws.NewBrick (4, 50, -4, 747, 47);
+							//ws.NewBrick (4, 49, 562, 796, 599);
+							//ws.NewBrick (4, -2, 6, 50, 599);
 
 							Random x = new Random ();
 							Random y = new Random ();
@@ -118,10 +201,10 @@ namespace ClarionApp
 							}
 						}
 					} else {
-						ws.NewBrick (4, 747, 2, 800, 567);
-						ws.NewBrick (4, 50, -4, 747, 47);
-						ws.NewBrick (4, 49, 562, 796, 599);
-						ws.NewBrick (4, -2, 6, 50, 599);
+						//ws.NewBrick (4, 747, 2, 800, 567);
+						//ws.NewBrick (4, 50, -4, 747, 47);
+						//ws.NewBrick (4, 49, 562, 796, 599);
+						//ws.NewBrick (4, -2, 6, 50, 599);
 
 						Random x = new Random ();
 						Random y = new Random ();
@@ -163,6 +246,34 @@ namespace ClarionApp
 							}
 						}
 					}
+
+
+					// ---- Start - Leaflet Generation --- //
+					IList<Thing> response = null;
+					if (ws != null && ws.IsConnected) {
+						response = ws.SendGetCreatureState (creatureName);
+						if (leaflet1.leafletID == 0 && leaflet2.leafletID == 0 && leaflet3.leafletID == 0) {
+							Creature cc = (Creature)response [0];
+							//leaflet1.leafletID = cc.leaflets [0].leafletID;
+							//leaflet2.leafletID = cc.leaflets [1].leafletID;
+							//leaflet3.leafletID = cc.leaflets [2].leafletID;
+							leaflet1 = cc.leaflets [0];
+							leaflet2 = cc.leaflets [1];
+							leaflet3 = cc.leaflets [2];
+							//Console.WriteLine ("Creature found: " + cc.Name);
+							//Console.WriteLine ("LF1: " + cc.leaflets [0].leafletID);
+							//Console.WriteLine ("LF2: " + cc.leaflets [1].leafletID);
+							//Console.WriteLine ("LF3: " + cc.leaflets [2].leafletID);
+						}
+					}
+					List<Leaflet> leafletList = new List<Leaflet> ();
+					leafletList.Add (leaflet1);
+					leafletList.Add (leaflet2);
+					leafletList.Add (leaflet3);
+					// ---- Finish - Leaflet generation --- //
+
+
+
 					if (!String.IsNullOrWhiteSpace (creatureId)) {
 						ws.SendStartCamera (creatureId);
 						ws.SendStartCreature (creatureId);
@@ -176,7 +287,7 @@ namespace ClarionApp
 					}
 
 					Console.Out.WriteLine ("Creature created with name: " + creatureId + "\n");
-					agent = new ClarionAgent (ws, creatureId, creatureName);
+					agent = new ClarionAgent (ws, creatureId, creatureName, leafletList);
 					agent.Run ();
 					Console.Out.WriteLine ("Running Simulation ...\n");
 				} else {

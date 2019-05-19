@@ -721,7 +721,6 @@ namespace ClarionApp
 
                 // Read the response
                 String response = ReadMessage();
-
                 // Parse the response
                 returnDic = ParseGetCreatureStateResponse(response, new String[]{"||"} );
             }
@@ -906,7 +905,41 @@ namespace ClarionApp
             catch (Exception e)
             {throw new WorldServerSendError("Error while sending message", e);}
 		}	
-		
+
+		public String[] sendGetCreaturePosition(String robotID){
+        	String controlMessage = "getcreatcoords " + robotID;
+        	SendMessage(controlMessage);
+
+			// Read the response
+			String response = String.Empty;
+			response = ReadMessage ();
+
+			if (!String.IsNullOrWhiteSpace (response)) {
+				string [] tokens = response.Split (new char [] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+				return tokens;
+			}
+
+			return null;
+    	}
+
+		public String [] sendDeliverLeaflet (String robotID, String leafletID)
+		{
+			//Console.WriteLine (">>> 1");
+			String controlMessage = "deliver " + robotID + " " + leafletID;
+			//Console.WriteLine ("controlMessage: " + controlMessage);
+			SendMessage (controlMessage);
+			//Console.WriteLine (">>> 2");
+			// Read the response
+			String response = String.Empty;
+			response = ReadMessage ();
+			//Console.WriteLine ("Delivery Leaflet: " + response);
+			if (!String.IsNullOrWhiteSpace (response)) {
+				string [] tokens = response.Split (new char [] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+				//Console.WriteLine (">>> 3");
+				return tokens;
+			}
+			return null;
+		}
 		/// <summary>
 		/// Create a new Food
 		/// </summary>
@@ -914,7 +947,7 @@ namespace ClarionApp
 		/// <param name="x">X Position</param>
 		/// <param name="y">Y Position</param>
 		/// <returns>Food's name</returns>
-        public String NewFood(Int32 type, Int32 x, Int32 y)
+		public String NewFood(Int32 type, Int32 x, Int32 y)
 		{
             String response = String.Empty;
             String foodName = String.Empty;
@@ -1297,13 +1330,34 @@ namespace ClarionApp
             return distance;
         }
 
-        /// <summary>
-        /// Set a given property in a model with the next value in enumeration using reflection
-        /// </summary>
-        /// <param name="model">The model object</param>
-        /// <param name="propertyName">The property name of the model</param>
-        /// <param name="enumerator">The enumerator</param>
-        private void SetAttribute(object model, string propertyName, System.Collections.IEnumerator enumerator)
+		public double CalculateDistanceToCreature (double creatureX, double creatureY, double thingX, double thingY)
+		{
+			Double distance = 0.0;
+
+			if (creatureX > thingX) {
+				distance += (creatureX - thingX) * (creatureX - thingX);
+			} else {
+				distance += (thingX - creatureX) * (thingX - creatureX);
+			}
+
+			if (creatureY > thingY) {
+				distance += (creatureY - thingY) * (creatureY - thingY);
+			} else {
+				distance += (thingY - creatureY) * (thingY - creatureY);
+			}
+
+			return Math.Sqrt (distance);
+
+		}
+
+
+		/// <summary>
+		/// Set a given property in a model with the next value in enumeration using reflection
+		/// </summary>
+		/// <param name="model">The model object</param>
+		/// <param name="propertyName">The property name of the model</param>
+		/// <param name="enumerator">The enumerator</param>
+		private void SetAttribute(object model, string propertyName, System.Collections.IEnumerator enumerator)
         {
             if (model != null && !String.IsNullOrWhiteSpace(propertyName) && enumerator != null && enumerator.MoveNext())
             {

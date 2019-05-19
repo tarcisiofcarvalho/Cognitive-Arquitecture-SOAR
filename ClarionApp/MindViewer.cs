@@ -5,7 +5,7 @@ using ClarionApp.Model;
 namespace ClarionApp
 {
 	public partial class MindViewer : Gtk.Window
-	{	 
+	{
 		public int red;
 		public int green;
 		public int blue;
@@ -14,18 +14,29 @@ namespace ClarionApp
 		public int white;
 		public int apples;
 		public int nuts;
-		public int[] leaflet1 = new int[6];
-		public int[] leaflet2 = new int[6];
-		public int[] leaflet3 = new int[6];
+		public int [] leaflet1 = new int [6];
+		public int [] leaflet2 = new int [6];
+		public int [] leaflet3 = new int [6];
+		public int [] leaflet1_t = new int [6];
+		public int [] leaflet2_t = new int [6];
+		public int [] leaflet3_t = new int [6];
+		public String [] leafletMap = new String [6];
 
-		public MindViewer () : base(Gtk.WindowType.Toplevel)
+		public MindViewer () : base (Gtk.WindowType.Toplevel)
 		{
-			this.Build();
-			update();
-			startViewTimer();
+			this.Build ();
+			update ();
+			startViewTimer ();
+			leafletMap [0] = "Red";
+			leafletMap [1] = "Green";
+			leafletMap [2] = "Blue";
+			leafletMap [3] = "Yellow";
+			leafletMap [4] = "Magenta";
+			leafletMap [5] = "White";
+
 		}
 
-		public void setBag(int r, int g, int b, int y, int m, int w, int a, int n) {
+		public void setBag (int r, int g, int b, int y, int m, int w, int a, int n) {
 			red = r;
 			green = g;
 			blue = b;
@@ -34,10 +45,10 @@ namespace ClarionApp
 			white = w;
 			apples = a;
 			nuts = n;
-			update();
+			update ();
 		}
 
-		public void setBag(Sack s) {
+		public void setBag (Sack s) {
 			red = s.red_crystal;
 			green = s.green_crystal;
 			blue = s.blue_crystal;
@@ -47,6 +58,64 @@ namespace ClarionApp
 			apples = s.p_food;
 			nuts = s.np_food;
 			//update();
+		}
+
+		public void updateLeaflet (String color){
+			bool found = false;
+			//Console.WriteLine ("Update leaflet");
+			for(int i=0; i<leafletMap.Length; i++) {
+				//Console.WriteLine ("map: " + leafletMap [i] + " - jewel: " + color);
+				if(leafletMap[i] == color && found==false) {
+					if(leaflet1[i] < leaflet1_t[i] && found == false && leaflet1_t[i] > 0) {
+						leaflet1 [i]++;
+						found = true;
+						//Console.WriteLine ("Mind - Update - Color added lf1: " + color);
+					}
+					if (leaflet2 [i] < leaflet2_t [i] && found == false && leaflet2_t [i] > 0) {
+						leaflet2 [i]++;
+						found = true;
+						//Console.WriteLine ("Mind - Update - Color added lf2: " + color);
+					}
+					if (leaflet3 [i] < leaflet3_t [i] && found == false && leaflet3_t [i] > 0) {
+						leaflet3 [i]++;
+						found = true;
+						//Console.WriteLine ("Mind - Update - Color added lf3: " + color);
+					}
+				}
+			}
+		}
+
+		public void loadLeaflet(Leaflet lf1, Leaflet lf2, Leaflet lf3)
+		{
+			//Console.WriteLine ("Load leaflet");
+
+			foreach (LeafletItem li in lf1.items) {
+				for (int i = 0; i < leafletMap.Length; i++) {
+					//Console.WriteLine ("map: " + leafletMap [i]);
+					if (leafletMap [i] == li.itemKey) {
+						leaflet1_t [i] += li.totalNumber;
+						//Console.WriteLine ("Mind - Load added lf1: " + li.itemKey);
+					}
+				}
+			}
+			foreach (LeafletItem li in lf2.items) {
+				for (int i = 0; i < leafletMap.Length; i++) {
+					//Console.WriteLine ("map: " + leafletMap [i]);
+					if (leafletMap [i] == li.itemKey) {
+						leaflet2_t [i] += li.totalNumber;
+						//Console.WriteLine ("Mind - Load added lf2: " + li.itemKey);
+					}
+				}
+			}
+			foreach (LeafletItem li in lf3.items) {
+				for (int i = 0; i < leafletMap.Length; i++) {
+					//Console.WriteLine ("map: " + leafletMap [i]);
+					if (leafletMap [i] == li.itemKey) {
+						leaflet3_t [i] += li.totalNumber;
+						//Console.WriteLine ("Mind - Load added lf3: " + li.itemKey);
+					}
+				}
+			}
 		}
 
 		public void updateLeaflet(int n, Leaflet l) {
@@ -117,7 +186,7 @@ namespace ClarionApp
 		}
 
 		public void DisplayTimeEvent( object source, ElapsedEventArgs e ) {
-			Console.Write("\r{0}", DateTime.Now);
+			//Console.Write("\r{0}", DateTime.Now);
 			// We need to call update this way, because the only thread able to send GTK commands is the Gtk.Application thread
 			// Otherwise this might cause unpredictable thread problems
 			Gtk.Application.Invoke(delegate{update();});

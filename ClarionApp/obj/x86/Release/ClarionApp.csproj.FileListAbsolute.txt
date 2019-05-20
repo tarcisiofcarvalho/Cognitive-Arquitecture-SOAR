@@ -20,3 +20,4 @@ C:/Users/tarci/Documents/IA941/Clarion/DemoClarion-v0.8/DemoClarion/ClarionApp/o
 /Users/tfc/eclipse-workspace/CognitiveArquitecture-CLARION/ClarionApp/obj/x86/Release/ClarionApp.csproj.CopyComplete
 /Users/tfc/eclipse-workspace/CognitiveArquitecture-CLARION/ClarionApp/obj/x86/Release/ClarionApp.exe
 /Users/tfc/eclipse-workspace/CognitiveArquitecture-CLARION/ClarionApp/obj/x86/Release/ClarionApp.pdb
+/Users/tfc/eclipse-workspace/CognitiveArquitecture-CLARION/ClarionApp/obj/x86/Release/ClarionApp.csprojAssemblyReference.cache

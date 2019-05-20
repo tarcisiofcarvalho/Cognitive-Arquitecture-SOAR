@@ -250,37 +250,43 @@ namespace ClarionApp
 			if (color.Equals ("White")) {
 				if (this.leafletRemainingJewelWhite > 0) {
 					leafletRemainingJewelWhite--;
-				} else if (isDesiredJewel (color)) {
+				} 
+				if (this.leafletRemainingJewelWhite==0 && isDesiredJewel (color)) {
 					jewelOutOfScope.Add (color);
 				}
 			} else if (color.Equals ("Red")) {
 				if (leafletRemainingJewelRed > 0) {
 					leafletRemainingJewelRed--;
-				} else if (isDesiredJewel (color)) {
+				}
+				if (this.leafletRemainingJewelRed == 0 && isDesiredJewel (color)) {
 					jewelOutOfScope.Add (color);
 				}
 			} else if (color.Equals ("Blue")) {
 				if (leafletRemainingJewelBlue > 0) {
 					leafletRemainingJewelBlue--;
-				} else if (isDesiredJewel (color)) {
+				}
+				if (this.leafletRemainingJewelBlue == 0 && isDesiredJewel (color)) {
 					jewelOutOfScope.Add (color);
 				}
 			} else if (color.Equals ("Yellow")) {
 				if (leafletRemainingJewelYellow > 0) {
 					leafletRemainingJewelYellow--;
-				} else if (isDesiredJewel (color)) {
+				}
+				if (this.leafletRemainingJewelYellow == 0 && isDesiredJewel (color)) {
 					jewelOutOfScope.Add (color);
 				}
 			} else if (color.Equals ("Magenta")) {
 				if (leafletRemainingJewelMagenta > 0) {
 					leafletRemainingJewelMagenta--;
-				} else if (isDesiredJewel (color)) {
+				}
+				if (this.leafletRemainingJewelMagenta == 0 && isDesiredJewel (color)) {
 					jewelOutOfScope.Add (color);
 				}
 			} else if (color.Equals ("Green")) {
 				if (leafletRemainingJewelGreen > 0) {
 					leafletRemainingJewelGreen--;
-				} else if (isDesiredJewel (color)) {
+				}
+				if (this.leafletRemainingJewelGreen == 0 && isDesiredJewel (color)) {
 					jewelOutOfScope.Add (color);
 				}
 			}
@@ -487,7 +493,7 @@ namespace ClarionApp
 				prad = (Math.PI / 180) * response.First ().Pitch;
 				while (prad > Math.PI) prad -= 2 * Math.PI;
 				while (prad < -Math.PI) prad += 2 * Math.PI;
-				Sack s = worldServer.SendGetSack ("0");
+				Sack s = worldServer.SendGetSack (creatureId);
 				mind.setBag (s);
 			}
 
@@ -528,7 +534,12 @@ namespace ClarionApp
 					worldServer.SendEatIt (creatureId, currentFood.Name);
 					break;
 				case CreatureActions.GET_JEWEL:
-					worldServer.SendSackIt (creatureId, currentJewel.Name);
+					if (isDesiredJewel (currentJewel.Material.Color)) {
+						worldServer.SendSackIt (creatureId, currentJewel.Name);  
+					} else {
+						worldServer.SendHideIt (creatureId, currentJewel.Name); // Workaround in case to get a jewel that is not needed 
+					}
+
 					processLeafletControl (currentJewel.Material.Color);
 					//Console.WriteLine(currentJewel.Name + " | " + currentJewel.Material.Color + " | " + currentJewel.X1 + "|" + currentJewel.Y1);
 					break;
@@ -701,16 +712,17 @@ namespace ClarionApp
 						brickCreatureCheck = true;
 						break;
 					}
-					if (listOfThings [i].CategoryId == Thing.CATEGORY_JEWEL && listOfThings [i].DistanceToCreature <= 55) {
-						jewelAhead = true;
-						if (desiredJewelToGet != null) {
-							if (listOfThings [i].DistanceToCreature < desiredJewelToGet.DistanceToCreature) {
-								desiredJewelToGet = listOfThings [i];
-							}
-						} else {
+					if (listOfThings [i].CategoryId == Thing.CATEGORY_JEWEL) {
+						if(listOfThings [i].DistanceToCreature <= 55) {
+							jewelAhead = true;
 							desiredJewelToGet = listOfThings [i];
+						} else if (isDesiredJewel(listOfThings [i].Material.Color)) {
+							desiredJewelInVision = true;
+							jewelInVision = listOfThings [i];
 						}
 					}
+
+
 					if (listOfThings [i].CategoryId == Thing.categoryPFOOD && listOfThings [i].DistanceToCreature <= 55) {
 						foodAhead = true;
 						if (foodToEat != null) {
@@ -777,6 +789,7 @@ namespace ClarionApp
 					si.Add (inputJewelAhead, CurrentAgent.Parameters.MIN_ACTIVATION);
 					si.Add (inputJewelInVision, CurrentAgent.Parameters.MIN_ACTIVATION);
 					si.Add (inputFuelLow, CurrentAgent.Parameters.MAX_ACTIVATION);
+					Console.WriteLine ("GO TO SPOT");
 					return si;
 				} else if (brickCreatureCheck) {
 					si.Add (inputWallCreatureAhead, CurrentAgent.Parameters.MAX_ACTIVATION);
@@ -784,7 +797,7 @@ namespace ClarionApp
 					si.Add (inputJewelAhead, CurrentAgent.Parameters.MIN_ACTIVATION);
 					si.Add (inputJewelInVision, CurrentAgent.Parameters.MIN_ACTIVATION);
 					si.Add (inputFuelLow, CurrentAgent.Parameters.MIN_ACTIVATION);
-					//Console.WriteLine ("CATEGORY_BRICK");
+					Console.WriteLine ("CATEGORY_BRICK");
 				} else if (jewelAhead) {
 					si.Add (inputWallCreatureAhead, CurrentAgent.Parameters.MIN_ACTIVATION);
 					si.Add (inputFoodAhead, CurrentAgent.Parameters.MIN_ACTIVATION);
@@ -792,7 +805,7 @@ namespace ClarionApp
 					si.Add (inputJewelInVision, CurrentAgent.Parameters.MIN_ACTIVATION);
 					si.Add (inputFuelLow, CurrentAgent.Parameters.MIN_ACTIVATION);
 					currentJewel = desiredJewelToGet;
-					//Console.WriteLine ("CATEGORY_JEWEL_AHEAD");
+					Console.WriteLine ("CATEGORY_JEWEL_AHEAD");
 				} else if (foodAhead) {
 					si.Add (inputWallCreatureAhead, CurrentAgent.Parameters.MIN_ACTIVATION);
 					si.Add (inputFoodAhead, CurrentAgent.Parameters.MAX_ACTIVATION);
@@ -800,7 +813,7 @@ namespace ClarionApp
 					si.Add (inputJewelInVision, CurrentAgent.Parameters.MIN_ACTIVATION);
 					si.Add (inputFuelLow, CurrentAgent.Parameters.MIN_ACTIVATION);
 					currentFood = foodToEat;
-					//Console.WriteLine ("CATEGORY_FOOD");
+					Console.WriteLine ("CATEGORY_FOOD");
 				} else if (desiredJewelInVision) {
 					si.Add (inputWallCreatureAhead, CurrentAgent.Parameters.MIN_ACTIVATION);
 					si.Add (inputFoodAhead, CurrentAgent.Parameters.MIN_ACTIVATION);
@@ -808,14 +821,14 @@ namespace ClarionApp
 					si.Add (inputJewelInVision, CurrentAgent.Parameters.MAX_ACTIVATION);
 					si.Add (inputFuelLow, CurrentAgent.Parameters.MIN_ACTIVATION);
 					currentJewel = jewelInVision;
-					//Console.WriteLine ("CATEGORY_JEWEL_IN_VISION");
+					Console.WriteLine ("CATEGORY_JEWEL_IN_VISION");
 				} else {
 					si.Add (inputWallCreatureAhead, CurrentAgent.Parameters.MIN_ACTIVATION);
 					si.Add (inputFoodAhead, CurrentAgent.Parameters.MIN_ACTIVATION);
 					si.Add (inputJewelAhead, CurrentAgent.Parameters.MIN_ACTIVATION);
 					si.Add (inputJewelInVision, CurrentAgent.Parameters.MIN_ACTIVATION);
 					si.Add (inputFuelLow, CurrentAgent.Parameters.MIN_ACTIVATION);
-					//Console.WriteLine ("WANDER");
+					Console.WriteLine ("WANDER");
 				}
 				return si;
 			}
